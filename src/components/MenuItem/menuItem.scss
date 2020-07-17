@@ -1,0 +1,40 @@
+.menu-item {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 30%;
+  height: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem .5rem 0 ;
+  border: 1px solid #555;
+  transition: all 3s;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+  }
+  
+  .content {
+    padding: 1rem;
+    text-align: center;
+    color: #555;
+    border: 1px solid #555;
+    background-color: #fff;
+    opacity: .7;
+    transition: all .3s;
+  }
+  
+  &:hover {
+    cursor: pointer;
+    img {
+      transform: scale(1.1);
+      transition: transform 6s cubic-bezier(.25, .45, .45, .95);
+    }
+    .content {
+      opacity: .9;
+    }
+  }
+}
