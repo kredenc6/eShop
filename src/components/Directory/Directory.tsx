@@ -5,8 +5,8 @@ import "./directory.scss"
 
 export default function Directory() {
   const [directories, setDirectories] = useState(directoryData)
-  const MenuItemComponents = directories.map(({ id, imageUrl, size, title }) => (
-    <MenuItem key={id} imageUrl={imageUrl} size={size} title={title} />
+  const MenuItemComponents = directories.map(({ id, ...restDirProps }) => (
+    <MenuItem key={id} {...restDirProps} />
   ))
 
   return (
