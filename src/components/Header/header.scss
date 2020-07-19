@@ -1,0 +1,35 @@
+@mixin header-anchor {
+  padding: .5rem;
+  text-transform: uppercase;
+}
+
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  .options {
+    display: flex;
+    align-items: center;
+    transition: all .5s;
+    li {
+      display: flex;
+      margin: .2rem 1.5rem;
+      list-style: none;
+      font-size: 1.8rem;
+      transition: all .5s;
+    }
+    a {
+      @include header-anchor();
+    }
+  }
+}
+
+.header-button {
+  @include header-anchor();
+  display: inline-block;
+  margin: 0;
+  font-size: inherit;
+  font-family: inherit;
+  background-color: inherit;
+}
