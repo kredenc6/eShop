@@ -1,11 +1,12 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import firebase, { auth } from "../../firebase"
+import { auth } from "../../firebase"
 import { ReactComponent as Logo } from "../../svgs/crown.svg"
+import { CurrentUser } from "../../types/stateTypes"
 import "./header.scss"
 
 type Props = {
-  currentUser: firebase.User | null
+  currentUser: CurrentUser | null
 }
 
 export default function Header({ currentUser }: Props) {

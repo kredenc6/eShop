@@ -29,3 +29,8 @@ button {
 h2 {
   margin: 1rem 0;
 }
+
+#appBody {
+  max-width: 1920px;
+  margin: 0 auto;
+}

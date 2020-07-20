@@ -1,29 +1,33 @@
 import React, { useState } from "react"
-import { auth } from "../../firebase"
+import { auth, createUserProfileDocument } from "../../firebase"
 import FormInput from "../FormInput/FormInput"
 import SharedButton from "../SharedButton/SharedButton"
 import "./signUp.scss"
 
 export default function SignUp() {
-  const [name, setName] = useState("")
+  const [displayName, setDisplayName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [passwordConfirmation, setPasswordConfirmation] = useState("")
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     console.log("signing up")
     e.preventDefault()
     if(password !== passwordConfirmation) {
       console.warn("Password mismatch!")
       return
     }
-    auth.createUserWithEmailAndPassword(email, password)
-      .then(userCredential => {
-        console.log(`${userCredential.user?.email} email registered successfuly.`)
-      })
-      .catch(err => {
-        console.error(err.message)
-      })
+    try {
+      const { user: newUser } = await auth.createUserWithEmailAndPassword(email, password)
+      await createUserProfileDocument(newUser, { displayName })
+      setDisplayName("")
+      setEmail("")
+      setPassword("")
+      setPasswordConfirmation("")
+      console.log(`${newUser?.email} email registered successfuly.`)
+    } catch(err) {
+      console.error(err.message)
+    }
   }
 
   return (
@@ -32,32 +36,36 @@ export default function SignUp() {
       <p>Sign up with your email and password</p>
       <form onSubmit={handleSubmit}>
         <FormInput
-          label="Display Name"
+          label="name"
           name="name"
-          onChange={e => setName(e.target.value)}
+          onChange={e => setDisplayName(e.target.value)}
+          required
           type="text"
-          value={name} />
+          value={displayName} />
         <FormInput
           label="email"
           name="email"
           onChange={e => setEmail(e.target.value)}
+          required
           type="email"
           value={email} />
         <FormInput
           label="password"
           name="password"
           onChange={e => setPassword(e.target.value)}
+          required
           type="password"
           value={password} />
         <FormInput
           label="confirm password"
           name="confirmPassword"
           onChange={e => setPasswordConfirmation(e.target.value)}
+          required
           type="password"
           value={passwordConfirmation} />
-          <div className="button-wrapper">
-            <SharedButton className="primary-button" value="sign up" />
-          </div>
+        <div className="button-wrapper">
+          <SharedButton className="primary-button" value="sign up" />
+        </div>
       </form>
     </div>
   )

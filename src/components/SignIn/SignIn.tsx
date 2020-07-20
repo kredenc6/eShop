@@ -20,7 +20,7 @@ export default function SignIn() {
   }
 
   const handleSignIn = () => {
-    console.log("Signing in.")
+    console.log("Signing in with email.")
     auth.signInWithEmailAndPassword(email, password)
       .then(userCredential => console.log(`You've logged in successfuly with email: ${userCredential.user?.email}`))
       .catch(error => {
@@ -40,13 +40,14 @@ export default function SignIn() {
           label="email"
           name="email"
           onChange={(e => setEmail(e.target.value))}
-          placeholder="test"
+          required
           type="email"
           value={email} />
         <FormInput
           label="password"
           name="password"
           onChange={e => setPassword(e.target.value)}
+          required
           type="password"
           value={password} />
         <div className="button-wrapper">
@@ -57,6 +58,7 @@ export default function SignIn() {
           <SharedButton
             className="secondary-button"
             onClick={handleSignInWithGoogle}
+            type="button"
             value="sign in with google" />
         </div>
       </form>
