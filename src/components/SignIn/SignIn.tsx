@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { auth, signInWithGoogle } from "../../firebase"
+import { auth, signInWithGoogle } from "../../firebase/firebaseUtils"
 import FormInput from "../../components/FormInput/FormInput"
 import SharedButton from "../../components/SharedButton/SharedButton"
 import "./signIn.scss"
@@ -19,16 +19,17 @@ export default function SignIn() {
       })
   }
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     console.log("Signing in with email.")
-    auth.signInWithEmailAndPassword(email, password)
-      .then(userCredential => console.log(`You've logged in successfuly with email: ${userCredential.user?.email}`))
-      .catch(error => {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log(errorMessage)
-      })
+    try {
+      const { user } = await auth.signInWithEmailAndPassword(email, password)
+      console.dir(user)
+      console.log(`${user?.displayName}! You've logged in successfuly with email: ${user?.email}`)
+    }catch(error) {
+      const errorCode = error.code
+      const errorMessage = error.message
+      console.log(errorCode, errorMessage)
+    }
   }
 
   return(

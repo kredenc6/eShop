@@ -1,40 +1,44 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { Route, Switch } from "react-router-dom"
-import { auth, createUserProfileDocument } from "./firebase"
+import { useDispatch, useSelector } from "react-redux"
+import { setCurrentUser } from "./redux/actions/userActions"
+import { auth, createUserProfileDocument } from "./firebase/firebaseUtils"
 import Header from "./components/Header/Header"
 import HomePage from "./pages/HomePage/HomePage"
 import Shop from "./pages/Shop/Shop"
 import SignInAndSignUp from "./pages/SignInAndSignUp/SignInAndSignUp"
 import { CurrentUser } from "./types/stateTypes"
+import { RootReducer } from "./redux/reducers/rootReducer"
 import "./styles/global.css"
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null)
+  const dispatch = useDispatch()
+  const currentUser = useSelector(({ user }: RootReducer) => user.currentUser)
 
   useEffect(() => {
+    console.log("slkdfjsdlkf")
     let unsubscribeSnapshot: undefined | (() => void);
-    // TODO better descritpion of what's going on is needed(and better implementation?)...
     const unsubscribeAuth = auth.onAuthStateChanged(async userAuth => {
-      if(userAuth && userAuth.displayName) { // ..."userAuth.displayName" -> don't allow email sign ups without displayName
+      if(userAuth) {
         const userRef = await createUserProfileDocument(userAuth)
         unsubscribeSnapshot = userRef?.onSnapshot(snapshot => {
           const nextUser = snapshot.data() as CurrentUser | undefined
-          nextUser ? setCurrentUser(nextUser) : setCurrentUser(null)
+          nextUser ? dispatch(setCurrentUser(nextUser)) : dispatch(setCurrentUser(null))
         })
       } else {
-        setCurrentUser(null)
+        dispatch(setCurrentUser(null))
       }
     })
     return () => {
       unsubscribeAuth()
       unsubscribeSnapshot && unsubscribeSnapshot()
     }
-  },[])
+  },[dispatch])
 
   return (
     <div>
-      Logged in as {currentUser?.displayName}
-      <Header currentUser={currentUser} />
+      Redux state: Logged in as {currentUser?.displayName}
+      <Header />
       <div id="appBody">
         <Switch>
           <Route exact component={HomePage} path="/" />

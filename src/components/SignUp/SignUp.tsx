@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { auth, createUserProfileDocument } from "../../firebase"
+import { auth, createUserProfileDocument } from "../../firebase/firebaseUtils"
 import FormInput from "../FormInput/FormInput"
 import SharedButton from "../SharedButton/SharedButton"
 import "./signUp.scss"

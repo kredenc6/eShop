@@ -1,15 +1,15 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { auth } from "../../firebase"
+import { useSelector } from "react-redux"
+import { auth } from "../../firebase/firebaseUtils"
 import { ReactComponent as Logo } from "../../svgs/crown.svg"
-import { CurrentUser } from "../../types/stateTypes"
 import "./header.scss"
+import { RootReducer } from "../../redux/reducers/rootReducer"
 
-type Props = {
-  currentUser: CurrentUser | null
-}
 
-export default function Header({ currentUser }: Props) {
+export default function Header () {
+  const currentUser = useSelector(({ user }: RootReducer) => user.currentUser)
+
   return(
     <header className="shop-header">
       <Link to="/"><Logo /></Link>
