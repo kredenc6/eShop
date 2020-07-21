@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { Route, Switch } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { connect } from "react-redux"
 import { setCurrentUser } from "./redux/actions/userActions"
 import { auth, createUserProfileDocument } from "./firebase/firebaseUtils"
 import Header from "./components/Header/Header"
@@ -11,29 +11,35 @@ import { CurrentUser } from "./types/stateTypes"
 import { RootReducer } from "./redux/reducers/rootReducer"
 import "./styles/global.css"
 
-export default function App() {
-  const dispatch = useDispatch()
-  const currentUser = useSelector(({ user }: RootReducer) => user.currentUser)
+type Props = {
+  currentUser: CurrentUser | null
+  setCurrentUser: (newUser: CurrentUser | null) => void
+}
+
+const App = ({ currentUser, setCurrentUser }: Props) => {
 
   useEffect(() => {
-    console.log("slkdfjsdlkf")
     let unsubscribeSnapshot: undefined | (() => void);
+
     const unsubscribeAuth = auth.onAuthStateChanged(async userAuth => {
       if(userAuth) {
         const userRef = await createUserProfileDocument(userAuth)
         unsubscribeSnapshot = userRef?.onSnapshot(snapshot => {
-          const nextUser = snapshot.data() as CurrentUser | undefined
-          nextUser ? dispatch(setCurrentUser(nextUser)) : dispatch(setCurrentUser(null))
+          const nextUser = {
+            id: snapshot.id,
+            ...snapshot.data()
+          } as unknown as CurrentUser
+          setCurrentUser(nextUser)
         })
       } else {
-        dispatch(setCurrentUser(null))
+        setCurrentUser(null)
       }
     })
     return () => {
       unsubscribeAuth()
       unsubscribeSnapshot && unsubscribeSnapshot()
     }
-  },[dispatch])
+  },[setCurrentUser])
 
   return (
     <div>
@@ -49,3 +55,13 @@ export default function App() {
     </div>
   )
 }
+
+const mapStateToProps = ({ user }: RootReducer) => ({
+  currentUser: user.currentUser
+})
+
+const mapDispatchToProps = {
+  setCurrentUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
