@@ -4,13 +4,31 @@
   height: 400px;
   margin-bottom: 2rem;
   font-size: 1.2rem;
-  img {
+  .item-img {
     width: 100%;
     height: 95%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
   &:hover {
-    .add-to-card {
-      cursor: pointer;
+    button {
+      display: block;
+    }
+  }
+  button {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    display: none;
+    transform: translate(-50%);
+    padding: .8rem;
+    color: #555;
+    background-color: #fff;
+    opacity: .7;
+    z-index: 1;
+    transition: all .3s;
+    &:hover {
       opacity: .9;
     }
   }
@@ -20,16 +38,4 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-}
-
-.add-to-card {
-  position: absolute;
-  bottom: 15%;
-  left: 50%;
-  transform: translate(-50%);
-  padding: .5rem;
-  background-color: #fff;
-  opacity: .7;
-  z-index: 1;
-  transition: opacity .3s;
 }

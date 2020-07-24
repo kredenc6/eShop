@@ -13,7 +13,7 @@ type Props = {
 const MenuItem = ({ history, imageUrl, linkUrl, match, size, title }: Props & RouteComponentProps) => {
   return (
     <div className={classNames("menu-item", size)} onClick={() => history.push(`${match.url}${linkUrl}`)}>
-      <img src={imageUrl} alt={title} />
+      <div className="menu-img" style={{ backgroundImage: `url("${imageUrl}")` }}></div>
       <div className="content">
         <h1 className="title">{title.toUpperCase()}</h1>
         <span className="subtitle">SHOP NOW</span>
