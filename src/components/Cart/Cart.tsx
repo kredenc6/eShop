@@ -1,19 +1,24 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { useDispatch, useSelector, shallowEqual } from "react-redux"
+import { connect } from "react-redux"
+import { cartItemsSelector, isCartVisibleSelector } from "../../redux/selectors/cartSelector"
+import { toggleCartVisibility } from "../../redux/actions/cartActions"
 import { RootReducer } from "../../redux/reducers/rootReducer"
 import classnames from "classnames"
 import CartItem from "../CartItem/CartItem"
 import SharedButton from "../SharedButton/SharedButton"
 import SimpleBar from "simplebar-react"
-import { toggleCartVisibility } from "../../redux/actions/cartActions"
+import { CartItem as CartItemType } from "../../redux/actions/cartActionTypes"
 import "./cart.scss"
 import 'simplebar/dist/simplebar.min.css';
 
-export default function Cart() {
-  const dispatch = useDispatch()
-  const cartItems = useSelector(({ cart }: RootReducer) => cart.cartItems, shallowEqual)
-  const isCartVisible = useSelector(({ cart }: RootReducer) => cart.isVisible, shallowEqual)
+type Props = {
+  cartItems: CartItemType[]
+  isCartVisible: boolean
+  toggleCartVisibility: () => void
+}
+
+const Cart = ({ cartItems, isCartVisible, toggleCartVisibility }: Props) => {
   const CartItemComponents = cartItems.map(cartItem => {
     return <CartItem cartItem={cartItem} key={cartItem.id} />
   })
@@ -23,8 +28,19 @@ export default function Cart() {
         {CartItemComponents}
       </SimpleBar>
       <Link to="/checkout">
-        <SharedButton className="primary-button" onClick={() => dispatch(toggleCartVisibility())} value="go to checkout" />
+        <SharedButton className="primary-button" onClick={() => toggleCartVisibility()} value="go to checkout" />
       </Link>
     </div>
   )
 }
+
+const mapStateToProps = (state: RootReducer) => ({
+  cartItems: cartItemsSelector(state),
+  isCartVisible: isCartVisibleSelector(state)
+})
+
+const mapDispatchToProps = ({
+  toggleCartVisibility
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

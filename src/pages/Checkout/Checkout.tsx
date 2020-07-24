@@ -1,13 +1,18 @@
 import React from "react"
-import { shallowEqual, useSelector } from "react-redux"
+import { connect } from "react-redux"
 import CheckoutItem from "../../components/CheckoutItem/CheckoutItem"
 import { RootReducer } from "../../redux/reducers/rootReducer"
 import "./checkout.scss"
+import { cartItemsSelector } from "../../redux/selectors/cartSelector"
+import { CartItem } from "../../redux/actions/cartActionTypes"
 
-export default function Checkout() {
-  const cartItems = useSelector(({ cart }: RootReducer) => cart.cartItems, shallowEqual)
+type Props = {
+  cartItems: CartItem[]
+}
+
+const Checkout= ({ cartItems }: Props) => {
   const finalPrice = cartItems.reduce((acc, cartItem) => (acc + cartItem.price * cartItem.quantity), 0)
-  const CheckoutItemComponents = cartItems.map(cartItem => <CheckoutItem key={cartItem.id} {...cartItem} />)
+  const CheckoutItemComponents = cartItems.map(cartItem => <CheckoutItem key={cartItem.id} item={cartItem} />)
 
   return(
     <div className="checkout-table">
@@ -23,3 +28,9 @@ export default function Checkout() {
     </div>
   )
 }
+
+const mapStateToProps = (state: RootReducer) => ({
+  cartItems: cartItemsSelector(state)
+})
+
+export default connect(mapStateToProps)(Checkout)
