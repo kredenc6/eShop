@@ -10,8 +10,8 @@ type Props = {
 }
 
 export default function CollectionPreview({ items, routeName, title }: Props) {
-  const CollectionItemComponents = items.filter((_, i) => i < 4).map(({ id, ...restCollectionProps }) => (
-    <CollectionItem key={id} {...restCollectionProps} />
+  const CollectionItemComponents = items.filter((_, i) => i < 4).map(collectionProps => (
+    <CollectionItem key={collectionProps.id} {...collectionProps} />
   ))
 
   return (

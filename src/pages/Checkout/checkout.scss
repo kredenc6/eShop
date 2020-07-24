@@ -1,0 +1,24 @@
+.checkout-table {
+  max-width: 50rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr .5fr;
+  padding-bottom: 1rem;
+  text-transform: capitalize;
+  border-bottom: 1px solid #555;
+  &>*:last-child {
+    justify-self: end;
+  }
+}
+
+.checkout-footer {
+  padding: 2rem .5rem 0;
+  font-size: 2rem;
+  text-align: right;
+  text-transform: uppercase;
+}

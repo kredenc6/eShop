@@ -1,0 +1,24 @@
+.checkout-item {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr .5fr;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.4rem;
+  border-bottom: 1px solid #555;
+  &>*:last-child {
+    justify-self: center;
+  }
+  .item-image {
+    width: 10rem;
+    height: 13rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+.quantity {
+  margin-left: -.5rem;
+}
