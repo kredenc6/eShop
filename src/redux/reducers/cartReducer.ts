@@ -17,7 +17,7 @@ const cartReducer = (state = initialState, action: CartActionTypes) => {
       }
 
       const updatedCartItems = cartItems.map(cartItem => {
-        return cartItem.id === newItemId ? { ...cartItem, count: cartItem.quantity + 1 } : cartItem
+        return cartItem.id === newItemId ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
       })
 
       return { ...state, cartItems: updatedCartItems }

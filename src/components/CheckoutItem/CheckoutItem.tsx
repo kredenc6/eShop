@@ -1,15 +1,15 @@
 import React from "react"
 import { connect } from "react-redux"
-import { increaseItemQuantity, decreaseItemQuantity, removeFromCart } from "../../redux/actions/cartActions"
+import { decreaseItemQuantity, increaseItemQuantity, removeFromCart } from "../../redux/actions/cartActions"
 import ButtonIcon from "../ButtonIcon/ButtonIcon"
-import { CartItem } from "../../redux/actions/cartActionTypes"
+import CartActionTypes, { CartItem } from "../../redux/actions/cartActionTypes"
 import "./checkoutItem.scss"
 
 type Props = {
-  decreaseItemQuantity: (id: number) => void
-  increaseItemQuantity: (id: number) => void
+  decreaseItemQuantity: (id: number) => CartActionTypes
+  increaseItemQuantity: (id: number) => CartActionTypes
   item: CartItem
-  removeFromCart: (id: number) => void
+  removeFromCart: (id: number) => CartActionTypes
 }
 
 const CheckoutItem = ({ decreaseItemQuantity, increaseItemQuantity, item, removeFromCart }: Props) => {
@@ -30,11 +30,22 @@ const CheckoutItem = ({ decreaseItemQuantity, increaseItemQuantity, item, remove
   )
 }
 
-
 const mapDispatchToProps = {
   decreaseItemQuantity,
   increaseItemQuantity,
   removeFromCart
 }
 
-export default connect(null, mapDispatchToProps)(CheckoutItem)
+export default React.memo(
+  connect(null, mapDispatchToProps)(CheckoutItem),
+  // compare function:
+  ({ item: prevItem }, { item: nextItem }) => { // deconstruct item from prevProps/nexProps as prevItem/nextItem
+    for(const [key, prevValue] of Object.entries(prevItem)) { // go through prevItem [key, value] pairs
+      if(key === "quantity") {
+        console.log(prevValue) // console log prevItem quantity
+        console.log(nextItem[key as keyof typeof nextItem]) // console log nextItem quantity
+      }
+      if(prevValue !== nextItem[key as keyof typeof nextItem]) return false // compare quantities
+    }
+    return true
+})

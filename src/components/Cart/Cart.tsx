@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { withRouter, RouteComponentProps } from "react-router-dom"
 import { connect } from "react-redux"
 import { cartItemsSelector, isCartVisibleSelector } from "../../redux/selectors/cartSelector"
 import { toggleCartVisibility } from "../../redux/actions/cartActions"
@@ -18,7 +18,7 @@ type Props = {
   toggleCartVisibility: () => void
 }
 
-const Cart = ({ cartItems, isCartVisible, toggleCartVisibility }: Props) => {
+const Cart = ({ cartItems, history, isCartVisible, toggleCartVisibility }: Props & RouteComponentProps) => {
   const CartItemComponents = cartItems.map(cartItem => {
     return <CartItem cartItem={cartItem} key={cartItem.id} />
   })
@@ -27,9 +27,12 @@ const Cart = ({ cartItems, isCartVisible, toggleCartVisibility }: Props) => {
       <SimpleBar className="cart-items">
         {CartItemComponents}
       </SimpleBar>
-      <Link to="/checkout">
-        <SharedButton className="primary-button" onClick={() => toggleCartVisibility()} value="go to checkout" />
-      </Link>
+      <SharedButton
+        className="primary-button"
+        onClick={() => {
+          history.push("/checkout")
+          toggleCartVisibility()
+        }} value="go to checkout" />
     </div>
   )
 }
@@ -43,4 +46,4 @@ const mapDispatchToProps = ({
   toggleCartVisibility
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Cart))

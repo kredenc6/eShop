@@ -1,10 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
+import { cartItemsSelector } from "../../redux/selectors/cartSelector"
 import CheckoutItem from "../../components/CheckoutItem/CheckoutItem"
 import { RootReducer } from "../../redux/reducers/rootReducer"
-import "./checkout.scss"
-import { cartItemsSelector } from "../../redux/selectors/cartSelector"
 import { CartItem } from "../../redux/actions/cartActionTypes"
+import "./checkout.scss"
 
 type Props = {
   cartItems: CartItem[]
@@ -24,7 +24,7 @@ const Checkout= ({ cartItems }: Props) => {
         <span>remove</span>
       </div>
       <div>{CheckoutItemComponents}</div>
-      <div className="checkout-footer">total: ${finalPrice}</div>
+      <div className="table-footer">total: ${finalPrice}</div>
     </div>
   )
 }
