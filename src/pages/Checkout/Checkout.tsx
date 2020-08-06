@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { cartItemsSelector } from "../../redux/selectors/cartSelector"
 import CheckoutItem from "../../components/CheckoutItem/CheckoutItem"
+import StripeButton from "../../components/StripeButton/StripeButton"
 import { RootReducer } from "../../redux/reducers/rootReducer"
 import { CartItem } from "../../redux/actions/cartActionTypes"
 import "./checkout.scss"
@@ -25,6 +26,14 @@ const Checkout= ({ cartItems }: Props) => {
       </div>
       <div>{CheckoutItemComponents}</div>
       <div className="table-footer">total: ${finalPrice}</div>
+      <div className='test-warning'>
+        *Please use the following test credit card for payments*
+        <br />
+        4242 4242 4242 4242 - Exp: 01/21 - CVC: 123
+      </div>
+      <div className="stripe-button-wrapper">
+        <StripeButton checkoutSum={finalPrice} />
+      </div>
     </div>
   )
 }

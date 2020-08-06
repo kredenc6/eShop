@@ -1,17 +1,14 @@
 import React from "react"
-import CollectionPreview from "../../components/CollectionPreview/CollectionPreview"
-import SHOP_DATA from "../../initialValues/shopData"
+import { Route, RouteComponentProps } from "react-router-dom"
+import CollectionOverview from "../../components/CollectionOverview/CollectionOverview"
+import Collection from "../Collection/Collection"
 import "./shop.scss"
 
-export default function Shop() {
-  const CollectionPreviewComponents = SHOP_DATA.map(({ id, ...restPreviewProps }) => (
-    <CollectionPreview key={id} {...restPreviewProps} />
-  ))
-
+export default function Shop({ match }: RouteComponentProps) {
   return (
     <div>
-      <h1 className="title">COLLECTIONS</h1>
-      {CollectionPreviewComponents}
+      <Route component={CollectionOverview} exact path={`${match.path}`} />
+      <Route component={Collection} path={`${match.path}/:collectionId`} />
     </div>
   )
 }

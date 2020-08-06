@@ -1,10 +1,16 @@
-import React, { useState } from "react"
-import SECTIONS_DATA  from "../../initialValues/sectionsData"
+import React from "react"
+import { connect } from "react-redux"
+import { directorySelector } from "../../redux/selectors/directorySelector"
 import MenuItem from "../MenuItem/MenuItem"
+import { RootReducer } from "../../redux/reducers/rootReducer"
+import { SectionsData } from "../../types/stateTypes"
 import "./directory.scss"
 
-export default function Directory() {
-  const [directories, setDirectories] = useState(SECTIONS_DATA)
+type Props = {
+  directories: SectionsData[]
+}
+
+const Directory = ({ directories }: Props) => {
   const MenuItemComponents = directories.map(({ id, ...restDirProps }) => (
     <MenuItem key={id} {...restDirProps} />
   ))
@@ -15,3 +21,9 @@ export default function Directory() {
     </div>
   )
 }
+
+const mapStateToProps = (state: RootReducer) => ({
+  directories: directorySelector(state)
+})
+
+export default connect(mapStateToProps)(Directory)

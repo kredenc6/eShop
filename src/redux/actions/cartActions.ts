@@ -1,4 +1,4 @@
-import { CollectionItemType } from "../../initialValues/shopData"
+import { CollectionItemType } from "../../types/stateTypes"
 import CartActionTypes, { ADD_TO_CART, DECREASE_ITEM_QUANTITY, INCREASE_ITEM_QUANTITY, REMOVE_FROM_CART , TOGGLE_CART_VISIBILITY} from "./cartActionTypes"
 
 export const addToCart = (item: CollectionItemType): CartActionTypes => {

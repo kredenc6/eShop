@@ -10,7 +10,7 @@ type Props = {
 export default function ShoppingBag({ itemCount, onClick }: Props) {
   return(
     <div className="shopping-bag-wrapper" onClick={onClick}>
-      <div className="item-count">{itemCount > 0 && itemCount}</div>
+      <div className="item-count">{itemCount}</div>
       <ShoppingBagIcon />
     </div>
   )

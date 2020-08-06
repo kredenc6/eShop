@@ -2,8 +2,8 @@ import React from "react"
 import { connect } from "react-redux"
 import { addToCart } from "../../redux/actions/cartActions"
 import SharedButton from "../SharedButton/SharedButton"
+import { CollectionItemType } from "../../types/stateTypes"
 import "./collectionItem.scss"
-import { CollectionItemType } from "../../initialValues/shopData"
 
 type Props = {
   addToCart: ({ id, imageUrl, name, price }: CollectionItemType) => void

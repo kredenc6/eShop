@@ -31,9 +31,9 @@ const cartReducer = (state = initialState, action: CartActionTypes) => {
     case "INCREASE_ITEM_QUANTITY": {
       const updatedCartItems = cartItems.map(item => {
         if(item.id === action.payload) {
-          item.quantity++
+          return { ...item, quantity: item.quantity + 1 }
         }
-        return item
+        return { ...item }
       })
       return { ...state, cartItems: updatedCartItems }
     }
@@ -41,9 +41,9 @@ const cartReducer = (state = initialState, action: CartActionTypes) => {
     case "DECREASE_ITEM_QUANTITY": {
       const updatedCartItems = cartItems.map(item => {
         if(item.id === action.payload) {
-          item.quantity--
+          return { ...item, quantity: item.quantity - 1 }
         }
-        return item
+        return { ...item }
       })
       .filter(({ quantity }) => quantity > 0)
       return { ...state, cartItems: updatedCartItems }

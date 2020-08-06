@@ -24,7 +24,7 @@ export default function SignIn() {
     try {
       const { user } = await auth.signInWithEmailAndPassword(email, password)
       console.dir(user)
-      console.log(`${user?.displayName}! You've logged in successfuly with email: ${user?.email}`)
+      console.log(`You've logged in successfuly with email: ${user?.email}`)
     }catch(error) {
       const errorCode = error.code
       const errorMessage = error.message

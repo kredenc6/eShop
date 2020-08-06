@@ -25,10 +25,14 @@ const Cart = ({ cartItems, history, isCartVisible, toggleCartVisibility }: Props
   return(
     <div className={classnames("cart", isCartVisible && "visible")}>
       <SimpleBar className="cart-items">
-        {CartItemComponents}
+        {cartItems.length ?
+            CartItemComponents
+          :
+            <p>You have no items in the cart.</p>}
       </SimpleBar>
       <SharedButton
         className="primary-button"
+        disabled={cartItems.length === 0}
         onClick={() => {
           history.push("/checkout")
           toggleCartVisibility()

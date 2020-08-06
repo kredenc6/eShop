@@ -1,6 +1,6 @@
 import React from "react"
 import CollectionItem from "../CollectionItem/CollectionItem"
-import { CollectionItemType } from "../../initialValues/shopData"
+import { CollectionItemType } from "../../types/stateTypes"
 import "./collectionPreview.scss"
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   title: string
 }
 
-export default function CollectionPreview({ items, routeName, title }: Props) {
+export default function CollectionPreview({ items, title }: Props) {
   const CollectionItemComponents = items.filter((_, i) => i < 4).map(collectionProps => (
     <CollectionItem key={collectionProps.id} {...collectionProps} />
   ))

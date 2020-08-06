@@ -1,7 +1,10 @@
-.section-items {
-  width: 100%;
+.collection {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   justify-items: center;
   grid-gap: 16px;
+}
+
+.title {
+  text-transform: uppercase;
 }

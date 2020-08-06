@@ -10,9 +10,8 @@ import SignInAndSignUp from "./pages/SignInAndSignUp/SignInAndSignUp"
 import Checkout from "./pages/Checkout/Checkout"
 import { CurrentUser } from "./types/stateTypes"
 import { RootReducer } from "./redux/reducers/rootReducer"
-import "./styles/global.css"
-
 import { currentUserSelector } from "./redux/selectors/userSelector"
+import "./styles/global.css"
 
 type Props = {
   currentUser: CurrentUser | null
