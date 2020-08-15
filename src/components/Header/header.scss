@@ -1,4 +1,4 @@
-@mixin header-anchor {
+@mixin header-anchor-style {
   padding: .5rem;
   text-transform: uppercase;
 }
@@ -21,13 +21,13 @@
       transition: all .5s;
     }
     a {
-      @include header-anchor();
+      @include header-anchor-style();
     }
   }
 }
 
 .header-button {
-  @include header-anchor();
+  @include header-anchor-style();
   display: inline-block;
   margin: 0;
   font-size: inherit;

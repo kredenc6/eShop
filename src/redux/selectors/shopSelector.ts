@@ -5,10 +5,15 @@ const getShop = (state: RootReducer) => state.shop
 
 export const collectionSelector = (idPropsFromUrl: string) => createSelector(
   getShop,
-  shop => shop.collections[idPropsFromUrl]
+  ({ collections }) => collections ? collections[idPropsFromUrl] : null
 )
 
 export const overviewCollectionSelector = createSelector(
   getShop,
-  ({ collections }) => Object.values(collections)
+  ({ collections }) => collections ? Object.values(collections) : []
+)
+
+export const isDataLoadedSelector = createSelector(
+  getShop,
+  ({ collections }) => !!collections
 )

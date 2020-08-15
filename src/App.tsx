@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { Redirect, Route, Switch } from "react-router-dom"
-import { connect } from "react-redux"
+import { connect, ConnectedProps } from "react-redux"
 import { setCurrentUser } from "./redux/actions/userActions"
 import { auth, createUserProfileDocument } from "./firebase/firebaseUtils"
 import Header from "./components/Header/Header"
@@ -13,12 +13,8 @@ import { RootReducer } from "./redux/reducers/rootReducer"
 import { currentUserSelector } from "./redux/selectors/userSelector"
 import "./styles/global.css"
 
-type Props = {
-  currentUser: CurrentUser | null
-  setCurrentUser: (newUser: CurrentUser | null) => void
-}
 
-const App = ({ currentUser, setCurrentUser }: Props) => {
+const App = ({ currentUser, setCurrentUser }: PropsFromRedux) => {
   useEffect(() => {
     let unsubscribeSnapshot: undefined | (() => void)
     const unsubscribeAuth = auth.onAuthStateChanged(async userAuth => {
@@ -67,4 +63,7 @@ const mapDispatchToProps = {
   setCurrentUser
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+const connector = connect(mapStateToProps, mapDispatchToProps)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(App)

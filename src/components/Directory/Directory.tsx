@@ -1,10 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
 import { directorySelector } from "../../redux/selectors/directorySelector"
+import { StyledDirectory } from "./directoryStyles"
 import MenuItem from "../MenuItem/MenuItem"
 import { RootReducer } from "../../redux/reducers/rootReducer"
 import { SectionsData } from "../../types/stateTypes"
-import "./directory.scss"
 
 type Props = {
   directories: SectionsData[]
@@ -16,9 +16,9 @@ const Directory = ({ directories }: Props) => {
   ))
 
   return (
-    <div className="directory-menu">
+    <StyledDirectory>
       {MenuItemComponents}
-    </div>
+    </StyledDirectory>
   )
 }
 

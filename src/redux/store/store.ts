@@ -1,11 +1,23 @@
-import { createStore } from "redux"
+import { applyMiddleware, compose, createStore } from "redux"
 import { persistStore } from "redux-persist"
+import thunk from "redux-thunk"
 import rootReducer from "../reducers/rootReducer"
 
-const store = createStore(
-  rootReducer,
-  (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-)
+let middleware: any[] = [thunk]
+let store: any;
+
+if(process.env.NODE_ENV === "development") { // use REDUX DEVTOOLS in development
+  const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+  store = createStore(
+    rootReducer,
+    composeEnhancers(applyMiddleware(...middleware))
+  )
+} else {
+  store = createStore(
+    rootReducer,
+    applyMiddleware(...middleware)
+  )
+}
 
 export default () => ({
   store,

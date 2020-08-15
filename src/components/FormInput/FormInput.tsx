@@ -1,6 +1,5 @@
 import React, { InputHTMLAttributes } from "react"
-import classnames from "classnames"
-import "./formInput.scss"
+import { StyledFormInput, StyledFormInputWrapper, StyledLabel } from "./formInputStyled"
 
 type Props = {
   label?: string
@@ -8,22 +7,15 @@ type Props = {
 
 export default function FormInput({ label, placeholder, ...restInputProps }: Props & InputHTMLAttributes<HTMLInputElement>) {
   return (
-    <div className="input-wrapper">
-      <input
-        className={classnames("form-input", label && "with-label")}
-        placeholder={label ? "" : placeholder}
-        {...restInputProps} />
+    <StyledFormInputWrapper>
+      <StyledFormInput placeholder={label ? "" : placeholder} {...restInputProps} />
       {label ? 
-          <label
-            className={classnames(
-              "label",
-              (restInputProps.value as string)?.length && "description-label")}
-          >
+          <StyledLabel isDescriptionLabel={!!(restInputProps.value as string)?.length}>
             {label}
-          </label>
+          </StyledLabel>
         :
           null
       }
-    </div>
+    </StyledFormInputWrapper>
   )
 }

@@ -1,12 +1,10 @@
 import React from "react"
-import { connect } from "react-redux"
+import { connect, ConnectedProps } from "react-redux"
 import { addToCart } from "../../redux/actions/cartActions"
 import SharedButton from "../SharedButton/SharedButton"
-import { CollectionItemType } from "../../types/stateTypes"
-import "./collectionItem.scss"
+import { StyledCollectionItem, StyledCollectionItemFooter, StyledItemImg } from "./collectionItemStyles"
 
-type Props = {
-  addToCart: ({ id, imageUrl, name, price }: CollectionItemType) => void
+interface Props extends PropsFromRedux {
   id: number
   imageUrl: string
   name: string
@@ -15,17 +13,17 @@ type Props = {
 
 const CollectionItem = ({ addToCart, id, imageUrl, name, price }: Props) => {
   return(
-    <div className="collection-item">
+    <StyledCollectionItem>
       <SharedButton
-        className="primary-button" 
+        colorTheme="primary" 
         onClick={() => addToCart({ id, imageUrl, name, price })}
         value="add to cart" />
-      <div className="item-img" style={{ backgroundImage: `url("${imageUrl}")` }}></div>
-      <div className="collection-item-footer">
+      <StyledItemImg imageUrl={imageUrl} />
+      <StyledCollectionItemFooter>
         <span>{name}</span>
         <span>{`$${price}`}</span>
-      </div>
-    </div>
+      </StyledCollectionItemFooter>
+    </StyledCollectionItem>
   )
 }
 
@@ -33,4 +31,7 @@ const mapDispatchToProps = {
   addToCart
 }
 
-export default connect(null, mapDispatchToProps)(CollectionItem)
+const connector = connect(null, mapDispatchToProps)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(CollectionItem)

@@ -1,15 +1,15 @@
 import React, { ButtonHTMLAttributes } from "react"
-import "./sharedButton.scss"
+import { StyledSharedButton } from "./sharedButtonStyles"
 
 type Props = {
-  className: "primary-button" | "secondary-button"
+  colorTheme: "primary" | "secondary"
   value: string
 }
 
-export default function SharedButton({ className, value, ...buttonProps }: Props & ButtonHTMLAttributes<HTMLButtonElement>) {
+export default function SharedButton({ colorTheme, value, ...buttonProps }: Props & ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button className={className} {...buttonProps}>
+    <StyledSharedButton colorTheme={colorTheme} {...buttonProps}>
       {value.toUpperCase()}
-    </button>
+    </StyledSharedButton>
   )
 }

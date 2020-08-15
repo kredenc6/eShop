@@ -64,7 +64,7 @@ export default function SignUp() {
           type="password"
           value={passwordConfirmation} />
         <div className="button-wrapper">
-          <SharedButton className="primary-button" value="sign up" />
+          <SharedButton colorTheme="primary" value="sign up" />
         </div>
       </form>
     </div>

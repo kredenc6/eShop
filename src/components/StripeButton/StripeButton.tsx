@@ -9,7 +9,6 @@ export default function StripeButton({ checkoutSum }: Props) {
   const stripeSum = checkoutSum * 100
 
   const onToken = (token: Token) => {
-    console.log(token)
     alert("Payment successful.")
   }
 

@@ -1,15 +1,12 @@
 import React from "react"
-import { connect } from "react-redux"
+import { connect, ConnectedProps } from "react-redux"
 import { decreaseItemQuantity, increaseItemQuantity, removeFromCart } from "../../redux/actions/cartActions"
 import ButtonIcon from "../ButtonIcon/ButtonIcon"
-import CartActionTypes, { CartItem } from "../../redux/actions/cartActionTypes"
+import { CartItem } from "../../redux/actions/cartActionTypes"
 import "./checkoutItem.scss"
 
-type Props = {
-  decreaseItemQuantity: (id: number) => CartActionTypes
-  increaseItemQuantity: (id: number) => CartActionTypes
+interface Props extends PropsFromRedux {
   item: CartItem
-  removeFromCart: (id: number) => CartActionTypes
 }
 
 const CheckoutItem = ({ decreaseItemQuantity, increaseItemQuantity, item, removeFromCart }: Props) => {
@@ -36,4 +33,7 @@ const mapDispatchToProps = {
   removeFromCart
 }
 
-export default connect(null, mapDispatchToProps)(CheckoutItem)
+const connector = connect(null, mapDispatchToProps)
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+export default connector(CheckoutItem)

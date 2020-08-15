@@ -53,11 +53,11 @@ export default function SignIn() {
           value={password} />
         <div className="button-wrapper">
           <SharedButton
-            className="primary-button"
+            colorTheme="primary"
             onClick={handleSignIn}
             value="sign in" />
           <SharedButton
-            className="secondary-button"
+            colorTheme="secondary"
             onClick={handleSignInWithGoogle}
             type="button"
             value="sign in with google" />

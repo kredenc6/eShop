@@ -26,7 +26,7 @@ const Checkout= ({ cartItems }: Props) => {
       </div>
       <div>{CheckoutItemComponents}</div>
       <div className="table-footer">total: ${finalPrice}</div>
-      <div className='test-warning'>
+      <div className="test-warning">
         *Please use the following test credit card for payments*
         <br />
         4242 4242 4242 4242 - Exp: 01/21 - CVC: 123

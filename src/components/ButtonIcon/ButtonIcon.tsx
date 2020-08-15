@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from "react"
-import "./buttonIcon.scss"
+import { StyledButtonIcon } from "./buttonIconStyles"
 
 type Props = {
   icon: string | JSX.Element
@@ -7,6 +7,6 @@ type Props = {
 
 export default function ButtonIcon({ icon, ...buttonProps }: Props & ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button className="button-icon" {...buttonProps}>{icon}</button>
+    <StyledButtonIcon {...buttonProps}>{icon}</StyledButtonIcon>
   )
 }

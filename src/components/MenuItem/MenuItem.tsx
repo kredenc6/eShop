@@ -1,7 +1,6 @@
 import React from "react"
 import { RouteComponentProps, withRouter } from "react-router-dom"
-import classNames from "classnames"
-import "./menuItem.scss"
+import { StyledContent, StyledMenuImage, StyledMenuItem } from "./menuItemStyles"
 
 type Props = { 
   imageUrl: string
@@ -12,13 +11,13 @@ type Props = {
 
 const MenuItem = ({ history, imageUrl, linkUrl, match, size, title }: Props & RouteComponentProps) => {
   return (
-    <div className={classNames("menu-item", size)} onClick={() => history.push(`${match.url}${linkUrl}`)}>
-      <div className="menu-img" style={{ backgroundImage: `url("${imageUrl}")` }}></div>
-      <div className="content">
-        <h1 className="title">{title.toUpperCase()}</h1>
-        <span className="subtitle">SHOP NOW</span>
-      </div>
-    </div>
+    <StyledMenuItem onClick={() => history.push(`${match.url}${linkUrl}`)} size={size}>
+      <StyledMenuImage imageUrl={imageUrl} />
+      <StyledContent>
+        <h1>{title}</h1>
+        <span>SHOP NOW</span>
+      </StyledContent>
+    </StyledMenuItem>
   )
 }
 

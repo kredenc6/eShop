@@ -22,7 +22,7 @@ export type CollectionItemType = {
 }
 
 export type ShopItem = {
-  id: number
+  id: number | string
   title: string
   routeName: string
   items: CollectionItemType[]

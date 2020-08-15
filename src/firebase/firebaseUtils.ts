@@ -1,6 +1,7 @@
 import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/firestore"
+import { ShopData, ShopItem } from "../types/stateTypes"
 
 const firebaseConfig = {
   apiKey: "AIzaSyB30ShWClZtA0p_mxot8_gBspkGo1dZemg",
@@ -45,6 +46,34 @@ export const createUserProfileDocument = async (newUser: firebase.User | null, a
     console.log("User already exists.")
   }
   return userRef
+}
+
+export const copyObjectToShopDataCollection = async (obj: Object) => {
+  const batch = firestore.batch()
+  const shopDataRef = firestore.collection("shopData")
+  
+  Object.values(obj).forEach(({ title, items }) => {
+    const newShopDataDocument = shopDataRef.doc()
+    batch.set(newShopDataDocument, { title, items })
+  })
+  return await batch.commit()
+}
+
+export const convertShopDataSnapshotToMap = (snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => {
+  const transformedSnaphot: ShopItem[] = snapshot.docs.map(doc => {
+    const { title, items } = doc.data() as Omit<ShopItem, "id" | "routeName">
+    return {
+      id: doc.id,
+      items,
+      routeName: encodeURI(title.toLowerCase()),
+      title
+    }
+  })
+
+  return transformedSnaphot.reduce((accumulator, data) => {
+    accumulator[data.title.toLowerCase() as keyof ShopData] = data
+    return accumulator
+  }, {} as ShopData)
 }
 
 export default firebase
